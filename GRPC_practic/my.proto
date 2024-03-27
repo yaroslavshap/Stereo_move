@@ -1,0 +1,29 @@
+syntax = "proto3";
+package proto15test;
+
+
+
+service FileTransferService {
+    // Способ 1: Унарная передача - клиент отправляет запрос, сервер отвечает одним ответом
+    rpc Case1(FileRequest) returns (FileResponse);
+
+    // Способ 2: Потоковая передача с клиента на сервер - клиент отправляет поток запросов, сервер отвечает ответом
+    rpc Case2(stream FileRequest) returns (FileResponse);
+
+    // Способ 3: Потоковая передача с клиента на сервер - клиент отправляет запрос, сервер отвечает потоком ответов
+    rpc Case3(FileRequest) returns (stream FileResponse);
+
+    // Способ 4: Двунаправленная потоковая передача - клиент и сервер обмениваются потоками запросов и ответов
+    rpc Case4(stream FileRequest) returns (stream FileResponse);
+}
+
+message FileRequest {
+    bytes image_1 = 1;
+    bytes image_2 = 2;
+    string filename1 = 3;
+    string filename2 = 4;
+}
+
+message FileResponse {
+    string message = 1;
+}

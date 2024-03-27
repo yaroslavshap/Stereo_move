@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  server:
+    container_name: 'server-cont'
+    build: server_d
+#    ports:
+#      - "8012:50053"
+    volumes:
+      - /Users/aroslavsapoval/myProjects/Practic3/GRPC_stream_neural/server_d:/app
+#    restart: always
+    networks:
+      - test_network
+  client:
+    container_name: 'client-cont'
+    build: client_d
+    volumes:
+      - /Users/aroslavsapoval/myProjects/Practic3/GRPC_stream_neural/client_d:/app
+    depends_on:
+      - server
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge

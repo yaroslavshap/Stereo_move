@@ -1,0 +1,22 @@
+- Запуск hypercorn на http1 с указанием хоста, порта и автоперезагруски сервера:
+    hypercorn client:app --bind 127.0.0.1:8003 --reload
+- Запуск hypercorn на http2 с указанием хоста, порта и автоперезагруски сервера:
+    hypercorn --keyfile key.pem --certfile cert.pem server:app --bind 127.0.0.1:8002 --reload
+- Способы генерации сертификатов:
+    1) openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+    2) с паролем: openssl req -newkey rsa:2048 -keyout domain.key -out domain.csr (https://for-each.dev/lessons/b/-openssl-self-signed-cert)
+
+
+-----
+hyper_proj_3
+ -> client - это клиент отправляющий стереопары (в теории асинхронно)
+ -> client2 - это клиент который отправляет левые и правые изображения 2 разными потоками
+ -> client_for_file - это клиент который передает 1 файл (можно разного размера)
+ -> client_h2 - это клиент который должен выполнять передачу по http2 через библиотеку h2 (вроде сокеты) - не работает
+
+ -> server_quart - сервер на языке quart - не работает
+ -> server_h2 - сервер должен принимать http2 с помощью библиотеки h2
+
+- speed_async - тест скорости асинхронно (в теории)
+- speed_async_send - тест скорости асинхронной передачи (в теории) - на практике передача все равно друг за другом
+- speed_sync - тест скорости синхронной передачи данных
